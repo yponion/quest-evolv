@@ -3,12 +3,14 @@
 import { use } from "react";
 import { useGetCustomerDetail } from "@/hooks/useGetCustomerDetail";
 import { isAxiosError } from "axios";
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { format, parseISO } from "date-fns";
+import { Button } from "@/components/ui/button";
 
 type Props = { params: Promise<{ id: string }> };
 
 export default function Page(props: Props) {
+  const router = useRouter();
   const params = use(props.params);
   const id = params.id;
 
@@ -46,7 +48,7 @@ export default function Page(props: Props) {
     throw error;
   }
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-10 text-slate-900">
+    <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-900">
       <div className="mx-auto w-full max-w-4xl space-y-6">
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
@@ -114,7 +116,13 @@ export default function Page(props: Props) {
             <p className="mt-1 whitespace-pre-wrap font-medium text-slate-700">{notes}</p>
           </div>
         </div>
+
+        <div className="flex justify-end">
+          <Button className="cursor-pointer" onClick={() => router.push(`/${id}/ai-analysis`, { scroll: false })}>
+            AI 분석
+          </Button>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }

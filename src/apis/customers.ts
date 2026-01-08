@@ -1,6 +1,7 @@
 import httpClient from './config';
 import { GetCustomersResponse, GetCustomerDetailResponse } from '@/types/customers';
 
+/** 고객 관련 API */
 export const customersApi = {
   /** 고객 리스트 조회 */
   getCustomers: () => httpClient.get<GetCustomersResponse>('/customers'),

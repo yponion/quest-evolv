@@ -1,4 +1,4 @@
-import { ApiResponse, ApiListResponse } from "./api"
+import { ApiResponse, ApiListResponse } from "./common"
 
 type CustomerData = {
   customer_id: string,
