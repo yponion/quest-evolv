@@ -1,4 +1,4 @@
-import { ApiResponse, ApiListResponse } from "../type"
+import { ApiResponse, ApiListResponse } from "./api"
 
 type CustomerData = {
   customer_id: string,
