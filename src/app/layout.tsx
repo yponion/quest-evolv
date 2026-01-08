@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "../style/globals.css";
+import ReactQueryProvider from "@/providers/QueryClientProvider";
 
 export const metadata: Metadata = {
   title: "이볼브 프론트엔드 과제 - 양정운",
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <ReactQueryProvider>{children}</ReactQueryProvider>
+      </body>
     </html>
   );
 }
