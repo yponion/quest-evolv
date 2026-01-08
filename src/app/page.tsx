@@ -9,6 +9,9 @@ export default function Home() {
   const { customersData, isLoading, error } = useGetCustomers();
   const router = useRouter();
 
+  // todo: loading
+  // todo: error
+
   return (
     <main>
       <Table>
