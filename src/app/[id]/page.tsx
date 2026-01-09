@@ -48,72 +48,72 @@ export default function Page(props: Props) {
     throw error;
   }
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-900">
+    <main className="min-h-screen px-4 py-10">
       <div className="mx-auto w-full max-w-4xl space-y-6">
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="rounded-2xl border p-6 shadow-sm">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-sm font-medium text-slate-500">회사</p>
+              <p className="text-sm font-medium">회사</p>
               <h1 className="text-2xl font-semibold tracking-tight">{company}</h1>
-              <p className="mt-1 text-sm text-slate-500">고객 ID: {customerId}</p>
+              <p className="mt-1 text-sm">고객 ID: {customerId}</p>
             </div>
-            <div className="rounded-xl bg-slate-100 px-4 py-2 text-sm text-slate-600">{createdAt}</div>
+            <div className="rounded-xl px-4 py-2 text-sm">{createdAt}</div>
           </div>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-base font-semibold text-slate-700">기본 정보</h2>
+          <div className="rounded-2xl border p-6 shadow-sm">
+            <h2 className="text-base font-semibold">기본 정보</h2>
             <div className="mt-4 space-y-3 text-sm">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                <span className="text-slate-500">이름</span>
+              <div className="flex items-center justify-between border-b pb-2">
+                <span>이름</span>
                 <span className="font-medium">{name}</span>
               </div>
-              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                <span className="text-slate-500">이메일</span>
+              <div className="flex items-center justify-between border-b pb-2">
+                <span>이메일</span>
                 <span className="font-medium">{email}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-slate-500">연락처</span>
+                <span>연락처</span>
                 <span className="font-medium">{phone}</span>
               </div>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-base font-semibold text-slate-700">회사 상세</h2>
+          <div className="rounded-2xl border p-6 shadow-sm">
+            <h2 className="text-base font-semibold">회사 상세</h2>
             <div className="mt-4 space-y-3 text-sm">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                <span className="text-slate-500">산업군</span>
+              <div className="flex items-center justify-between border-b pb-2">
+                <span>산업군</span>
                 <span className="font-medium">{industry}</span>
               </div>
-              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                <span className="text-slate-500">직원 수</span>
+              <div className="flex items-center justify-between border-b pb-2">
+                <span>직원 수</span>
                 <span className="font-medium">{employeeCount}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-slate-500">연매출</span>
+                <span>연매출</span>
                 <span className="font-medium">{annualRevenue}</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-base font-semibold text-slate-700">연락 및 비고</h2>
+        <div className="rounded-2xl border p-6 shadow-sm">
+          <h2 className="text-base font-semibold">연락 및 비고</h2>
           <div className="mt-4 grid gap-4 text-sm md:grid-cols-2">
-            <div className="rounded-xl bg-slate-50 p-4">
-              <p className="text-slate-500">주소</p>
+            <div className="rounded-xl p-4">
+              <p>주소</p>
               <p className="mt-1 font-medium">{address}</p>
             </div>
-            <div className="rounded-xl bg-slate-50 p-4">
-              <p className="text-slate-500">최근 연락일</p>
+            <div className="rounded-xl p-4">
+              <p>최근 연락일</p>
               <p className="mt-1 font-medium">{lastContactDate}</p>
             </div>
           </div>
-          <div className="mt-4 rounded-xl border border-slate-100 bg-slate-50 p-4 text-sm">
-            <p className="text-slate-500">메모</p>
-            <p className="mt-1 whitespace-pre-wrap font-medium text-slate-700">{notes}</p>
+          <div className="mt-4 rounded-xl border p-4 text-sm">
+            <p>메모</p>
+            <p className="mt-1 whitespace-pre-wrap font-medium">{notes}</p>
           </div>
         </div>
 
