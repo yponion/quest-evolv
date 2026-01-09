@@ -2,10 +2,10 @@
 
 import { use } from "react";
 import { useGetCustomerDetail } from "@/hooks/useGetCustomerDetail";
-import { isAxiosError } from "axios";
-import { notFound, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { format, parseISO } from "date-fns";
 import { Button } from "@/components/ui/button";
+import { handleApiError } from "@/lib/handleApiError";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -32,21 +32,10 @@ export default function Page(props: Props) {
     : "-";
   const notes = details?.notes ?? "-";
 
-  // todo: isLoading
+  // todo: isLoading 에 관련하여 "-" 유지할 것인지에 대한 고민
 
-  if (error) {
-    if (isAxiosError(error)) {
-      const status = error.response?.status;
-      if (status === 404) {
-        notFound();
-      }
-      if (status && status >= 500) {
-        throw new Error("Server error");
-      }
-    }
+  if (error) handleApiError(error);
 
-    throw error;
-  }
   return (
     <main className="min-h-screen px-4 py-10">
       <div className="mx-auto w-full max-w-4xl space-y-6">
@@ -57,7 +46,7 @@ export default function Page(props: Props) {
               <h1 className="text-2xl font-semibold tracking-tight">{company}</h1>
               <p className="mt-1 text-sm">고객 ID: {customerId}</p>
             </div>
-            <div className="rounded-xl px-4 py-2 text-sm">{createdAt}</div>
+            <div className="rounded-xl px-4 py-2 text-sm bg-gray-100 dark:bg-zinc-900">{createdAt}</div>
           </div>
         </div>
 
@@ -102,11 +91,11 @@ export default function Page(props: Props) {
         <div className="rounded-2xl border p-6 shadow-sm">
           <h2 className="text-base font-semibold">연락 및 비고</h2>
           <div className="mt-4 grid gap-4 text-sm md:grid-cols-2">
-            <div className="rounded-xl p-4">
+            <div className="rounded-xl p-4 border">
               <p>주소</p>
               <p className="mt-1 font-medium">{address}</p>
             </div>
-            <div className="rounded-xl p-4">
+            <div className="rounded-xl p-4 border">
               <p>최근 연락일</p>
               <p className="mt-1 font-medium">{lastContactDate}</p>
             </div>

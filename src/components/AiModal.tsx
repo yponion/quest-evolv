@@ -6,6 +6,7 @@ import { useAiAnalysis } from "@/hooks/useAiAnalysis";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { handleApiError } from "@/lib/handleApiError";
 
 export default function AiModal() {
   const router = useRouter();
@@ -27,7 +28,7 @@ export default function AiModal() {
 
   const help = "AI 분석은 최대 1분 가량의 시간이 소요됩니다.";
 
-  // todo: error
+  if (error) handleApiError(error);
 
   return (
     <Dialog
