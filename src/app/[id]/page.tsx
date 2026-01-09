@@ -33,7 +33,7 @@ export default function Page(props: Props) {
   const notes = details?.notes ?? "-";
 
   // todo: isLoading 에 관련하여 "-" 유지할 것인지에 대한 고민
-
+  // todo: 아래 디자인 리팩토링 -> 중복 컴포넌트화
   if (error) handleApiError(error);
 
   return (
