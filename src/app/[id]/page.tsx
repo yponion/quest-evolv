@@ -65,7 +65,7 @@ export default function Page(props: Props) {
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-sm font-medium">회사</p>
-              <h1 className="text-2xl font-semibold tracking-tight">{company}</h1>
+              <h1 className="text-2xl font-semibold tracking-tight min-h-8 flex items-center">{company}</h1>
               <p className="mt-1 text-sm flex">
                 고객 ID: <span className="pl-1 flex items-center">{customerId}</span>
               </p>
