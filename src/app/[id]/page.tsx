@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { format, parseISO } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { handleApiError } from "@/lib/handleApiError";
+import { Spinner } from "@/components/ui/spinner";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -17,22 +18,43 @@ export default function Page(props: Props) {
   const { customerDetailData, isLoading, error } = useGetCustomerDetail(id);
   const data = customerDetailData?.data;
   const details = data?.details;
-  const company = data?.company ?? "-";
-  const createdAt = data?.created_at ? format(parseISO(data.created_at), "yyyy-MM-dd HH:mm") : "-";
-  const customerId = data?.customer_id ?? "-";
-  const name = data?.name ?? "-";
-  const email = data?.email ?? "-";
-  const phone = data?.phone ?? "-";
-  const industry = details?.industry ?? "-";
-  const employeeCount = details?.employee_count ? details.employee_count.toLocaleString() + "명" : "-";
-  const annualRevenue = details?.annual_revenue ? "₩" + Number(details.annual_revenue).toLocaleString() + "원" : "-";
-  const address = details?.address ?? "-";
-  const lastContactDate = details?.last_contact_date
-    ? format(parseISO(details.last_contact_date), "yyyy-MM-dd HH:mm")
-    : "-";
-  const notes = details?.notes ?? "-";
+  const company = isLoading ? <Spinner /> : data?.company ?? "-";
+  const createdAt = isLoading ? (
+    <Spinner />
+  ) : data?.created_at ? (
+    format(parseISO(data.created_at), "yyyy-MM-dd HH:mm")
+  ) : (
+    "-"
+  );
+  const customerId = isLoading ? <Spinner /> : data?.customer_id ?? "-";
+  const name = isLoading ? <Spinner /> : data?.name ?? "-";
+  const email = isLoading ? <Spinner /> : data?.email ?? "-";
+  const phone = isLoading ? <Spinner /> : data?.phone ?? "-";
+  const industry = isLoading ? <Spinner /> : details?.industry ?? "-";
+  const employeeCount = isLoading ? (
+    <Spinner />
+  ) : details?.employee_count ? (
+    details.employee_count.toLocaleString() + "명"
+  ) : (
+    "-"
+  );
+  const annualRevenue = isLoading ? (
+    <Spinner />
+  ) : details?.annual_revenue ? (
+    "₩" + Number(details.annual_revenue).toLocaleString() + "원"
+  ) : (
+    "-"
+  );
+  const address = isLoading ? <Spinner /> : details?.address ?? "-";
+  const lastContactDate = isLoading ? (
+    <Spinner />
+  ) : details?.last_contact_date ? (
+    format(parseISO(details.last_contact_date), "yyyy-MM-dd HH:mm")
+  ) : (
+    "-"
+  );
+  const notes = isLoading ? <Spinner /> : details?.notes ?? "-";
 
-  // todo: isLoading 에 관련하여 "-" 유지할 것인지에 대한 고민
   // todo: 아래 디자인 리팩토링 -> 중복 컴포넌트화
   if (error) handleApiError(error);
 
@@ -44,7 +66,9 @@ export default function Page(props: Props) {
             <div>
               <p className="text-sm font-medium">회사</p>
               <h1 className="text-2xl font-semibold tracking-tight">{company}</h1>
-              <p className="mt-1 text-sm">고객 ID: {customerId}</p>
+              <p className="mt-1 text-sm flex">
+                고객 ID: <span className="pl-1 flex items-center">{customerId}</span>
+              </p>
             </div>
             <div className="rounded-xl px-4 py-2 text-sm bg-gray-100 dark:bg-zinc-900">{createdAt}</div>
           </div>
