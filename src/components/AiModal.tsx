@@ -14,7 +14,6 @@ export default function AiModal() {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    // todo: 매개변수로 해당글의 customerId 를 던지면 캐싱할만 한데, 랜덤한 analysis 가 선택되어 반환 되기 때문에 언마운트되면 값을 지워줘서 매번 새로운 값을 보장하게 하였는데, 문제의 의도가 맞는지 더 고민 필요
     return () => queryClient.removeQueries({ queryKey: ["aiAnalysisApi.aiAnalysis"] });
   }, [queryClient]);
 
@@ -42,10 +41,10 @@ export default function AiModal() {
     >
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>AI 분석</DialogTitle>
+          <DialogTitle>{isLoading ? "AI 분석 중..." : "AI 분석 결과"}</DialogTitle>
           <DialogDescription>{isLoading ? help : processing_time_s}</DialogDescription>
         </DialogHeader>
-        {isLoading ? <Loading /> : <div>{content}</div>}
+        {isLoading ? <Loading /> : <p>{content}</p>}
       </DialogContent>
     </Dialog>
   );
