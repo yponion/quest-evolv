@@ -7,7 +7,10 @@ export default function InfoCard({
   isLoading,
 }: {
   title: string;
-  contents: object[];
+  contents: {
+    key: string;
+    value: React.ReactNode;
+  }[];
   isLoading: boolean;
 }) {
   return (
