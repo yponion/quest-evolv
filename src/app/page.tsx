@@ -30,7 +30,7 @@ export default function Home() {
         <section className="rounded-2xl border shadow-sm">
           <div className="overflow-x-auto">
             {isLoading ? (
-              <Loading />
+              <Loading size="big" className="h-[409.5px]" />
             ) : (
               <Table>
                 <TableCaption className="sr-only">고객 목록 테이블</TableCaption>

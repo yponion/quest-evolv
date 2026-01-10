@@ -3,10 +3,10 @@
 import { useRouter } from "next/navigation";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useAiAnalysis } from "@/hooks/useAiAnalysis";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { handleApiError } from "@/lib/handleApiError";
+import Loading from "@/components/Loading";
 
 export default function AiModal() {
   const router = useRouter();
@@ -45,14 +45,7 @@ export default function AiModal() {
           <DialogTitle>AI 분석</DialogTitle>
           <DialogDescription>{isLoading ? help : processing_time_s}</DialogDescription>
         </DialogHeader>
-        {isLoading ? (
-          <div className="space-y-2">
-            <Skeleton className="h-4 w-[250px]" />
-            <Skeleton className="h-4 w-[200px]" />
-          </div>
-        ) : (
-          <div>{content}</div>
-        )}
+        {isLoading ? <Loading /> : <div>{content}</div>}
       </DialogContent>
     </Dialog>
   );
