@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 이볼브 프론트엔드 과제 - 양정운
 
-## Getting Started
-
-First, run the development server:
+## 🚀 프로젝트 실행 방법
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠 사용한 기술 스택
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- React.js
+- Next.js
+- Tailwind CSS
+- React Query
+- pnpm
+- shadcn/ui
+- [axios](https://www.npmjs.com/package/axios): 응답 타입 제네릭을 통한 타입 안정성과, 추후 interceptor 기반의 공통 요청/응답 확장성을 고려해 사용했습니다.
+- ~~Zustand는 서버 상태와 분리된 클라이언트 전역 상태가 필요하지 않아 사용하지 않았습니다.~~
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 프로젝트 구조 설명
 
-## Learn More
+### 폴더 구조
 
-To learn more about Next.js, take a look at the following resources:
+페이지 수가 많지 않은 비교적 단순한 프로젝트이기 때문에, 과도한 구조 분리를 지양하고 components, hooks 등을 중심으로 한 단순하고 직관적인 폴더 구조를 채택하였습니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### AI 분석 모달
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Next의 [Intercepting Routes](https://nextjs.org/docs/app/api-reference/file-conventions/intercepting-routes)와 [Parallel Routes](https://nextjs.org/docs/app/api-reference/file-conventions/parallel-routes)를 활용하여, 뒤로가기/앞으로가기로 모달을 열고 닫을 수 있게 구현하였습니다.
+- X 버튼 외에도 모달 외부 클릭 또는 ESC로 닫히도록 구현하였습니다.
 
-## Deploy on Vercel
+## 구현하면서 고민했던 부분
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 오버엔지니어링
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+오버엔지니어링의 기준에 대해 고민했습니다. 실무 환경에서는 소통을 통해 범위를 정리하고 요구사항을 명확하게 할 수 있지만, 과제 형식에서는 그 과정이 제한적이라 요구사항을 과도하게 확장하지 않으면서도, 확장 가능성을 해치지 않는 선을 기준으로 구현하려 노력했습니다.
+
+### UX
+
+UX에 대한 고민을 많이 하였습니다. 특히 로딩 과정에서 CLS(Cumulative Layout Shift)가 발생하지 않도록 초기 렌더링 시 콘텐츠 영역을 미리 확보하는 데 집중하였습니다. 이를 통해 사용자가 화면의 갑작스러운 흔들림 없이 안정적인 인터페이스를 경험할 수 있도록 하였습니다.
+
+예를 들어, 고객 목록 페이지에서는 Skeleton UI를 사용해 콘텐츠가 채워진 것처럼 보이도록 처리하였고, 고객 상세 페이지에서는 전체 레이아웃은 유지한 채 필요한 영역에만 로딩 스피너를 노출하였습니다.
+
+또한 AI 분석 모달에서는 "AI 분석은 최대 1분 가량의 시간이 소요됩니다."와 같은 안내 문구를 제공하여, 사용자가 대기 시간의 이유를 이해하고 이탈하지 않도록 유도하였습니다.
+
+### 데이터 캐싱
+
+언제 캐싱된 데이터를 신선하지 않다고 판단할지에 대해 고민하였습니다. 고객 목록 및 고객 상세 정보는 데이터 변경 빈도가 높지 않다고 판단하여 5분의 staleTime을 설정하여, 불필요한 네트워크 요청을 줄이면서도 데이터 신선도를 일정 수준 유지하도록 하였습니다.
+
+반면 AI 분석 데이터는 요청마다 결과가 달라지는 특성이 있어, 모달이 닫히면 해당 캐시를 제거하고 모달이 다시 열릴 때 항상 새로운 데이터를 불러오도록 구현하였습니다. 해당 API는 React Query를 제거하고 직접 호출해도 문제가 없다고 판단할 수 있었으나, 코드 일관성을 유지하고 React Query가 제공하는 `isLoading` 등의 상태를 일관되게 활용하기 위해 React Query를 적용하였습니다. 또한 향후 캐싱 전략이 필요해질 가능성을 고려한 선택이었습니다.
+
+## AI 도구 사용 여부 및 활용 방식
+
+- GPT-5.2-Codex 사용
+- 디자인 문서가 없어 기본 디자인 틀을 구성하는 데 참고
+
+## 아쉬운 점 / 개선하고 싶은 부분
+
+아쉬운 점으로는 과제 형식상 실제 팀원들과의 소통이 제한적이었다는 점입니다. 예를 들어 AI 분석을 기다리는 동안 해당 API에 대한 설명이나 다른 유익한 정보를 보여주어 사용자의 이탈률을 줄일 수 있을 것이라 생각했지만, 해당 API 가 어떤 목적을 가지며 사용자에게 제공할 수 있는 추가 정보가 무엇인지 파악하는 데 한계가 있어 과제 범위 내에서는 구현하지 못했습니다.
+
+## (선택) 시간이 더 있었다면 추가하고 싶은 기능
+
+- AI 분석 대기 화면 개선(설명/힌트 등)
+- 데이터 필터/검색 및 정렬 기능
+- 페이지네이션
